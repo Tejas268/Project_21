@@ -1,6 +1,6 @@
 var bullet, wall;
 var bulletImage, bullet2, wallSound;
-var r, g, v, w, h, weight, thickness, speed;
+var v, w, h, weight, thickness, speed;
 
 
 function preload() {
@@ -16,14 +16,12 @@ function setup() {
     h = windowHeight;
     createCanvas(w, h);
 
-    wight = Math.round(random(30,52));
+    weight = Math.round(random(30,52));
     thickness = Math.round(random(22,83));
     speed = Math.round(random(223,321));
-    //v = Math.round(random(50,60));
     console.log(v);
 
     bullet = createSprite(80,h/2,20,20);
-    bullet.addImage(bullet2);
     bullet.addImage(bulletImage);
     bullet.debug = true;
     bullet.scale = 0.42;
@@ -31,13 +29,6 @@ function setup() {
     bullet.setCollider("rectangle",0,0,bullet.width,bullet.height);
 
     wall = createSprite(w/1.2,h/2,thickness,h/1.5);
-
-    r = circle(w/1.3,30,20);
-    r = shapeColour = "red";
-    //r.visible = false;
-    g = circle(w/1.3,70,20);
-    g = shapeColour = "green";
-    //g.visible = false;
 }
 
 function draw() {
@@ -45,18 +36,13 @@ function draw() {
 
     if (touching(wall,bullet)) {
         var d = 0.5 * weight * speed * speed / (thickness * thickness * thickness);
+        bullet.velocityX = 0;
         
-    if (d < 10) {
-        r.visible = true;
-        bullet.velocityX = 0;
-        bullet.changeImage(bullet2);
+        bullet.addImage(bullet2);
 
-    } else if (d > 10) {
-        g.visible = true;
+      if (d > 10) {
         wall.visible = false;
-        bullet.velocityX = 0;
         wallSound.play();
-        bullet.changeImage(bullet2);
     }
     }
 
